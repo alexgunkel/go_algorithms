@@ -3,15 +3,17 @@ Package sort ...
 */
 package sort
 
+import "github.com/alexgunkel/go_algorithms/model"
+
 /*
 InsertionSort ...
 */
-func InsertionSort(input *sortables) {
-	sortables := *input
-	*input = insertionSort(sortables)
+func InsertionSort(input *model.Sortables) {
+	listOfThings := *input
+	*input = insertionSort(listOfThings)
 }
 
-func insertionSort(input sortables) sortables {
+func insertionSort(input model.Sortables) model.Sortables {
 	length := len(input)
 	for i := 1; i < length; i++ {
 		for j := i; j > 0; j-- {

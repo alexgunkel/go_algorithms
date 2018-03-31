@@ -5,28 +5,32 @@ package dataprovider
 
 import (
   "bufio"
+  "github.com/alexgunkel/go_algorithms/model"
   "os"
   "strconv"
   "testing"
 )
 
-type sorter func(*[]int64)
+type sorter func(*model.Sortables)
 
-var mergeResult []int64
+/*
+MergeResult ...
+*/
+var MergeResult model.Sortables
 
 /*
 ReadLines ...
 readLines reads a whole file into memory
 and returns a slice of its lines.
 */
-func ReadLines(path string) ([]int64, error) {
-  file, err := os.Open(path)
+func ReadLines(dataFile string) (model.Sortables, error) {
+  file, err := os.Open(dataFile)
   if err != nil {
-    return nil, err
+    panic(err)
   }
   defer file.Close()
 
-  var lines []int64
+  var lines model.Sortables
   scanner := bufio.NewScanner(file)
   for scanner.Scan() {
     var line int64
@@ -38,12 +42,12 @@ func ReadLines(path string) ([]int64, error) {
 
 /*
 Build a sorted list of length integers
-and return as []int64
+and return as model.Sortables
 */
-func getSortedList(length int) []int64 {
-  var sortedListOfIntegers []int64
+func getSortedList(length int) model.Sortables {
+  var sortedListOfIntegers model.Sortables
 
-  for i := 1; i <= 1000*length; i++ {
+  for i := 1; i <= length; i++ {
     sortedListOfIntegers = append(sortedListOfIntegers, int64(i))
   }
   return sortedListOfIntegers
@@ -53,10 +57,10 @@ func getSortedList(length int) []int64 {
 Build a sorted list of integers descending from
 length to one
 */
-func getSortedListInverted(length int) []int64 {
-  var sortedListOfIntegers []int64
+func getSortedListInverted(length int) model.Sortables {
+  var sortedListOfIntegers model.Sortables
 
-  for i := 1000 * length; i > 0; i-- {
+  for i := length; i > 0; i-- {
     sortedListOfIntegers = append(sortedListOfIntegers, int64(i))
   }
   return sortedListOfIntegers
@@ -75,7 +79,7 @@ func BenchmarkWithSortedList(b *testing.B, f sorter, length int) {
     f(&content)
   }
 
-  mergeResult = content
+  MergeResult = content
 }
 
 /*
@@ -91,5 +95,20 @@ func BenchmarkWithSortedListInverted(b *testing.B, f sorter, length int) {
     f(&content)
   }
 
-  mergeResult = content
+  MergeResult = content
+}
+
+/*
+BenchmarkSort ...
+*/
+func BenchmarkSort(b *testing.B, f sorter, amount int64) {
+  input, _ := ReadLines("./dataprovider/data/random" + strconv.FormatInt(amount, 10))
+  content := model.Sortables(input)
+  orig := content
+  for n := 0; n < b.N; n++ {
+    content = orig
+    f(&content)
+  }
+
+  MergeResult = content
 }

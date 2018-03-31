@@ -2,14 +2,16 @@
 package sort
 
 import (
+	"github.com/alexgunkel/go_algorithms/dataprovider"
+	"github.com/alexgunkel/go_algorithms/model"
 	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
 )
 
 func TestSelectSort(testing *testing.T) {
-	input, _ := readLines("./data/random10")
-	content := sortables(input)
+	input, _ := dataprovider.ReadLines("./data/random10")
+	content := model.Sortables(input)
 	SelectSort(&content)
 
 	for key, number := range content {
@@ -20,12 +22,12 @@ func TestSelectSort(testing *testing.T) {
 	}
 }
 
-var selectResult sortables
+var selectResult model.Sortables
 
 func benchmarkSelectSort(amount int64, b *testing.B) {
 	file := "./data/random" + strconv.FormatInt(amount, 10)
-	input, _ := readLines(file)
-	content := sortables(input)
+	input, _ := dataprovider.ReadLines(file)
+	content := model.Sortables(input)
 
 	for n := 0; n < b.N; n++ {
 		SelectSort(&content)

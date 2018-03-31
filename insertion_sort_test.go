@@ -1,15 +1,15 @@
 package sort
 
 import (
-	"./dataprovider"
+	"github.com/alexgunkel/go_algorithms/dataprovider"
+	"github.com/alexgunkel/go_algorithms/model"
 	"github.com/stretchr/testify/assert"
-	"strconv"
 	"testing"
 )
 
 func TestInsertionSort(testing *testing.T) {
-	input, _ := readLines("./data/random10")
-	content := sortables(input)
+	input, _ := dataprovider.ReadLines("./data/random10")
+	content := model.Sortables(input)
 	InsertionSort(&content)
 
 	for key, number := range content {
@@ -20,48 +20,34 @@ func TestInsertionSort(testing *testing.T) {
 	}
 }
 
-var insertionResult sortables
+func BenchmarkInsertionSort10(b *testing.B)     { dataprovider.BenchmarkSort(b, InsertionSort, 10) }
+func BenchmarkInsertionSort100(b *testing.B)    { dataprovider.BenchmarkSort(b, InsertionSort, 100) }
+func BenchmarkInsertionSort1000(b *testing.B)   { dataprovider.BenchmarkSort(b, InsertionSort, 1000) }
+func BenchmarkInsertionSort10000(b *testing.B)  { dataprovider.BenchmarkSort(b, InsertionSort, 10000) }
+func BenchmarkInsertionSort100000(b *testing.B) { dataprovider.BenchmarkSort(b, InsertionSort, 100000) }
 
-func benchmarkInsertionSort(amount int64, b *testing.B) {
-	file := "./data/random" + strconv.FormatInt(amount, 10)
-	input, _ := readLines(file)
-	content := sortables(input)
-	var newResult sortables
-	for n := 0; n < b.N; n++ {
-		newResult = insertionSort(content)
-	}
-
-	insertionResult = newResult
+func BenchmarkSortedInsertion10(b *testing.B) {
+	dataprovider.BenchmarkWithSortedList(b, InsertionSort, 10)
 }
-
-func BenchmarkInsertionSort10(b *testing.B)     { benchmarkInsertionSort(10, b) }
-func BenchmarkInsertionSort100(b *testing.B)    { benchmarkInsertionSort(100, b) }
-func BenchmarkInsertionSort1000(b *testing.B)   { benchmarkInsertionSort(1000, b) }
-func BenchmarkInsertionSort10000(b *testing.B)  { benchmarkInsertionSort(10000, b) }
-func BenchmarkInsertionSort100000(b *testing.B) { benchmarkInsertionSort(100000, b) }
-
-func BenchmarkSortedInsertion1(b *testing.B) {
-	dataprovider.BenchmarkWithSortedList(b, InsertionSort, 1)
+func BenchmarkSortedInsertion100(b *testing.B) {
+	dataprovider.BenchmarkWithSortedList(b, InsertionSort, 100)
 }
-func BenchmarkSortedInsertion2(b *testing.B) {
-	dataprovider.BenchmarkWithSortedList(b, InsertionSort, 2)
+func BenchmarkSortedInsertion1000(b *testing.B) {
+	dataprovider.BenchmarkWithSortedList(b, InsertionSort, 1000)
 }
-func BenchmarkSortedInsertion4(b *testing.B) {
-	dataprovider.BenchmarkWithSortedList(b, InsertionSort, 4)
-}
-func BenchmarkSortedInsertion8(b *testing.B) {
-	dataprovider.BenchmarkWithSortedList(b, InsertionSort, 8)
+func BenchmarkSortedInsertion10000(b *testing.B) {
+	dataprovider.BenchmarkWithSortedList(b, InsertionSort, 10000)
 }
 
-func BenchmarkInvertedSortedInsertion1(b *testing.B) {
-	benchmarkWithSortedListInverted(b, InsertionSort, 1)
+func BenchmarkInvertedSortedInsertion10(b *testing.B) {
+	dataprovider.BenchmarkWithSortedListInverted(b, InsertionSort, 10)
 }
-func BenchmarkInvertedSortedInsertion2(b *testing.B) {
-	benchmarkWithSortedListInverted(b, InsertionSort, 2)
+func BenchmarkInvertedSortedInsertion100(b *testing.B) {
+	dataprovider.BenchmarkWithSortedListInverted(b, InsertionSort, 100)
 }
-func BenchmarkInvertedSortedInsertion4(b *testing.B) {
-	benchmarkWithSortedListInverted(b, InsertionSort, 4)
+func BenchmarkInvertedSortedInsertion1000(b *testing.B) {
+	dataprovider.BenchmarkWithSortedListInverted(b, InsertionSort, 1000)
 }
-func BenchmarkInvertedSortedInsertion8(b *testing.B) {
-	benchmarkWithSortedListInverted(b, InsertionSort, 8)
+func BenchmarkInvertedSortedInsertion10000(b *testing.B) {
+	dataprovider.BenchmarkWithSortedListInverted(b, InsertionSort, 10000)
 }

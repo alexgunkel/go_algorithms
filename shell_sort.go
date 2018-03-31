@@ -7,15 +7,17 @@ Author Alexander Gunkel <alexandergunkel@gmail.com>
 */
 package sort
 
+import "github.com/alexgunkel/go_algorithms/model"
+
 /*
 ShellSort ...
 */
-func ShellSort(input *[]int64) {
+func ShellSort(input *model.Sortables) {
 	args := *input
 	*input = shellSort(args)
 }
 
-func shellSort(input []int64) sortables {
+func shellSort(input model.Sortables) model.Sortables {
 	var length, interval int
 	length = len(input)
 	interval = 1
@@ -36,7 +38,7 @@ func shellSort(input []int64) sortables {
 	return input
 }
 
-func changePositions(slPtr *[]int64, posOne int, posTwo int) {
+func changePositions(slPtr *model.Sortables, posOne int, posTwo int) {
 	sl := *slPtr
 	var tmp int64
 	tmp = sl[posOne]

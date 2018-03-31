@@ -1,11 +1,13 @@
 package sort
 
+import "github.com/alexgunkel/go_algorithms/model"
+
 /*
 SelectSort ...
 */
-func SelectSort(input *sortables) {
+func SelectSort(input *model.Sortables) {
 	content := *input
-	var output sortables
+	var output model.Sortables
 	var length int
 	var currentLength int
 	var index int

@@ -8,12 +8,14 @@ Author Alexander Gunkel <alexandergunkel@gmail.com>
 
 package sort
 
+import "github.com/alexgunkel/go_algorithms/model"
+
 /*
 MergeSort ...
 
-@param	*sortables listOfThings	pointer to a slice of things to sort
+@param	*model.Sortables listOfThings	pointer to a slice of things to sort
 */
-func MergeSort(listOfThings *sortables) {
+func MergeSort(listOfThings *model.Sortables) {
 	input := *listOfThings
 	*listOfThings = mergeSort(input)
 }
@@ -21,9 +23,9 @@ func MergeSort(listOfThings *sortables) {
 /*
 MergeSortInline ...
 
-@param	*sortables listOfThings	pointer to a slice of things to sort
+@param	*model.Sortables listOfThings	pointer to a slice of things to sort
 */
-func MergeSortInline(listOfThings *sortables) {
+func MergeSortInline(listOfThings *model.Sortables) {
 	input := *listOfThings
 	lastOffset := len(input) - 1
 	mergeSortInline(listOfThings, 0, lastOffset)
@@ -32,9 +34,9 @@ func MergeSortInline(listOfThings *sortables) {
 /*
 MergeSortMixed ...
 
-@param	*sortables listOfThings	pointer to a slice of things to sort
+@param	*model.Sortables listOfThings	pointer to a slice of things to sort
 */
-func MergeSortMixed(listOfThings *sortables) {
+func MergeSortMixed(listOfThings *model.Sortables) {
 	input := *listOfThings
 	*listOfThings = mergeSortMixed(input)
 }
@@ -46,7 +48,7 @@ for small lists and go-routines for very large lists.
 This turns out to be quite fast on long lists while being
 slow on short lists.
 */
-func mergeSort(input sortables) sortables {
+func mergeSort(input model.Sortables) model.Sortables {
 	var length, middle int
 	length = len(input)
 	if length <= 1 {
@@ -59,7 +61,7 @@ func mergeSort(input sortables) sortables {
 		return merge(mergeSortMixed(input[0:middle]), mergeSortMixed(input[middle:length]))
 	}
 
-	c1 := make(chan sortables)
+	c1 := make(chan model.Sortables)
 
 	go func() {
 		c1 <- mergeSort(input[0:middle])
@@ -75,7 +77,7 @@ func mergeSort(input sortables) sortables {
 /*
 Mixed merge-sort backend-function
 */
-func mergeSortMixed(input sortables) sortables {
+func mergeSortMixed(input model.Sortables) model.Sortables {
 	var length, middle int
 	length = len(input)
 	if length < 50 {
@@ -87,7 +89,7 @@ func mergeSortMixed(input sortables) sortables {
 	return merge(mergeSortMixed(input[0:middle]), mergeSortMixed(input[middle:length]))
 }
 
-func merge(partOne sortables, partTwo sortables) (result sortables) {
+func merge(partOne model.Sortables, partTwo model.Sortables) (result model.Sortables) {
 	lengthPartOne := len(partOne)
 	lengthPartTwo := len(partTwo)
 	positionPartOne := 0
@@ -111,7 +113,7 @@ func merge(partOne sortables, partTwo sortables) (result sortables) {
 // Use only one slice. Don't copy arrays
 //
 // Function expects slice as pointer to avoid any copying
-func mergeSortInline(input *sortables, start int, end int) {
+func mergeSortInline(input *model.Sortables, start int, end int) {
 	var middle int
 	diff := end - start
 
@@ -128,7 +130,7 @@ func mergeSortInline(input *sortables, start int, end int) {
 // Merge parts of arrays
 //
 // Used to merge on one and the same array
-func mergeParts(input *sortables, startFirst int, startSecond int, end int) {
+func mergeParts(input *model.Sortables, startFirst int, startSecond int, end int) {
 	listOfThings := *input
 	var tmp int64
 	offsetFirst := startFirst

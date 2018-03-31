@@ -2,16 +2,18 @@
 package sort
 
 import (
+	"github.com/alexgunkel/go_algorithms/dataprovider"
+	"github.com/alexgunkel/go_algorithms/model"
 	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
 )
 
 func TestShellSort(testing *testing.T) {
-	content, _ := readLines("./data/random10")
-	original_length := len(content)
+	content, _ := dataprovider.ReadLines("./data/random10")
+	originalLength := len(content)
 	ShellSort(&content)
-	assert.Equal(testing, original_length, len(content))
+	assert.Equal(testing, originalLength, len(content))
 
 	for key, number := range content {
 		if key > 0 {
@@ -21,17 +23,17 @@ func TestShellSort(testing *testing.T) {
 	}
 }
 
-var shell_result sortables
+var shellResult model.Sortables
 
 func benchmarkShellSort(amount int64, b *testing.B) {
 	file := "./data/random" + strconv.FormatInt(amount, 10)
-	content, _ := readLines(file)
-	var new_result sortables
+	content, _ := dataprovider.ReadLines(file)
+	var newResult model.Sortables
 	for n := 0; n < b.N; n++ {
-		new_result = shellSort(content)
+		newResult = shellSort(content)
 	}
 
-	shell_result = new_result
+	shellResult = newResult
 }
 
 func BenchmarkShellSort10(b *testing.B)     { benchmarkShellSort(10, b) }
