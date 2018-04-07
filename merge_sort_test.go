@@ -12,7 +12,7 @@ import (
 var mergeResult model.Sortables
 
 func TestMergeSort(testing *testing.T) {
-	input, _ := dataprovider.ReadLines("./data/random10")
+	input, _ := dataprovider.ReadLines("./dataprovider/data/random10")
 	content := model.Sortables(input)
 	originalLength := len(content)
 	MergeSort(&content)
@@ -27,7 +27,7 @@ func TestMergeSort(testing *testing.T) {
 }
 
 func TestMergeSortInline(testing *testing.T) {
-	input, _ := dataprovider.ReadLines("./data/random10")
+	input, _ := dataprovider.ReadLines("./dataprovider/data/random10")
 	content := model.Sortables(input)
 	originalLength := len(content)
 	MergeSortInline(&content)
@@ -50,7 +50,7 @@ func TestMergeParts(testing *testing.T) {
 }
 
 func benchmarkMergeSort(amount int64, b *testing.B) {
-	file := "./data/random" + strconv.FormatInt(amount, 10)
+	file := "./dataprovider/data/random" + strconv.FormatInt(amount, 10)
 	input, _ := dataprovider.ReadLines(file)
 	content := model.Sortables(input)
 
@@ -68,7 +68,7 @@ func BenchmarkMergeSort10000(b *testing.B)  { benchmarkMergeSort(10000, b) }
 func BenchmarkMergeSort100000(b *testing.B) { benchmarkMergeSort(100000, b) }
 
 func benchmarkMixedMergeSort(amount int64, b *testing.B) {
-	file := "./data/random" + strconv.FormatInt(amount, 10)
+	file := "./dataprovider/data/random" + strconv.FormatInt(amount, 10)
 	input, _ := dataprovider.ReadLines(file)
 	content := model.Sortables(input)
 
@@ -86,7 +86,7 @@ func BenchmarkMixedMergeSort10000(b *testing.B)  { benchmarkMixedMergeSort(10000
 func BenchmarkMixedMergeSort100000(b *testing.B) { benchmarkMixedMergeSort(100000, b) }
 
 func benchmarkInlineMergeSort(amount int64, b *testing.B) {
-	file := "./data/random" + strconv.FormatInt(amount, 10)
+	file := "./dataprovider/data/random" + strconv.FormatInt(amount, 10)
 	input, _ := dataprovider.ReadLines(file)
 	content := model.Sortables(input)
 

@@ -10,7 +10,7 @@ import (
 )
 
 func TestSelectSort(testing *testing.T) {
-	input, _ := dataprovider.ReadLines("./data/random10")
+	input, _ := dataprovider.ReadLines("./dataprovider/data/random10")
 	content := model.Sortables(input)
 	SelectSort(&content)
 
@@ -25,7 +25,7 @@ func TestSelectSort(testing *testing.T) {
 var selectResult model.Sortables
 
 func benchmarkSelectSort(amount int64, b *testing.B) {
-	file := "./data/random" + strconv.FormatInt(amount, 10)
+	file := "./dataprovider/data/random" + strconv.FormatInt(amount, 10)
 	input, _ := dataprovider.ReadLines(file)
 	content := model.Sortables(input)
 

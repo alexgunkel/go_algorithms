@@ -8,7 +8,7 @@ import (
 )
 
 func TestInsertionSort(testing *testing.T) {
-	input, _ := dataprovider.ReadLines("./data/random10")
+	input, _ := dataprovider.ReadLines("./dataprovider/data/random10")
 	content := model.Sortables(input)
 	InsertionSort(&content)
 

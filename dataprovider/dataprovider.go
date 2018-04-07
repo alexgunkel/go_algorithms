@@ -6,6 +6,7 @@ package dataprovider
 import (
   "bufio"
   "github.com/alexgunkel/go_algorithms/model"
+  "github.com/stretchr/testify/assert"
   "os"
   "strconv"
   "testing"
@@ -111,4 +112,23 @@ func BenchmarkSort(b *testing.B, f sorter, amount int64) {
   }
 
   MergeResult = content
+}
+
+/*
+SorterTest ...
+
+Test sort-function with small test-data-list
+*/
+func SorterTest(t *testing.T, f sorter) {
+  content, _ := dataprovider.ReadLines("./dataprovider/data/random10")
+  originalLength := len(content)
+  f(&content)
+  assert.Equal(testing, originalLength, len(content))
+
+  for key, number := range content {
+    if key > 0 {
+      compare := content[key-1]
+      assert.Truef(testing, compare < number, "Asssert that %d is greater then %d", number, compare)
+    }
+  }
 }
