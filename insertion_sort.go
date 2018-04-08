@@ -18,9 +18,7 @@ func insertionSort(input model.Sortables) model.Sortables {
 	for i := 1; i < length; i++ {
 		for j := i; j > 0; j-- {
 			if input[j] < input[j-1] {
-				tmp := input[j]
-				input[j] = input[j-1]
-				input[j-1] = tmp
+				input[j], input[j-1] = input[j-1], input[j]
 			}
 		}
 	}

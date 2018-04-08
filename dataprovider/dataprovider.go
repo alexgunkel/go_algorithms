@@ -20,11 +20,11 @@ MergeResult ...
 var MergeResult model.Sortables
 
 /*
-Readlines ...
-Readlines reads a whole file into memory
+ReadLines ...
+ReadLines reads a whole file into memory
 and returns a slice of its lines.
 */
-func Readlines(dataFile string) (model.Sortables, error) {
+func ReadLines(dataFile string) (model.Sortables, error) {
   file, err := os.Open(dataFile)
   if err != nil {
     panic(err)
@@ -103,7 +103,7 @@ func BenchmarkWithSortedListInverted(b *testing.B, f sorter, length int) {
 BenchmarkSort ...
 */
 func BenchmarkSort(b *testing.B, f sorter, amount int64) {
-  input, _ := Readlines("./dataprovider/data/random" + strconv.FormatInt(amount, 10))
+  input, _ := ReadLines("./dataprovider/data/random" + strconv.FormatInt(amount, 10))
   content := model.Sortables(input)
   orig := content
   for n := 0; n < b.N; n++ {
@@ -120,7 +120,7 @@ SorterTest ...
 Test sort-function with small test-data-list
 */
 func SorterTest(t *testing.T, f sorter) {
-  content, _ := Readlines("./dataprovider/data/random10")
+  content, _ := ReadLines("./dataprovider/data/random10")
   originalLength := len(content)
   f(&content)
   assert.Equal(t, originalLength, len(content))
@@ -128,7 +128,7 @@ func SorterTest(t *testing.T, f sorter) {
   for key, number := range content {
     if key > 0 {
       compare := content[key-1]
-      assert.Truef(t, compare < number, "Asssert that %d is greater then %d", number, compare)
+      assert.Truef(t, compare <= number, "Asssert that %d is greater then or equals %d", number, compare)
     }
   }
 }
